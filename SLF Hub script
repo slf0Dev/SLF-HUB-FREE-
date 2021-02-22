@@ -13,10 +13,14 @@
 ╔═╝║║║╚═╦╝╚╣╚═╝║
 ╚══╩╝╚══╩══╩═══╝
 ]]
-function Atk(Skill)
-	game:GetService("ReplicatedStorage").RemoteEvent.Skill.DF:FireServer(Skill, "Down")
-  game:GetService("ReplicatedStorage").RemoteEvent.Skill.DF:FireServer(Skill, "Up")
-	end
+local SkillsList = {
+"E",
+"R",
+"T",
+"F"
+}
+
+
 	
 	
 	Targets = {
@@ -57,15 +61,13 @@ function Atk(Skill)
 				end
 		while _G.Farm do 
 			for i,v in next,Workspace:GetChildren() do
-				if v.Name == _G.Target and v.Humanoid.Health > 0 then
+				if v.Name == _G.Target and v.Humanoid.Health > 0 and v ~= nil then
 	           game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  v.Humanoid.RootPart.CFrame * CFrame.new(0,_G.Dist,0)
+		   for _,Skill in next,SkillsList do
+		   game:GetService("ReplicatedStorage").RemoteEvent.Skill.DF:FireServer(Skill, "Down")
+		   end
 	      end
 	   end
-	wait()
-		Atk("R")
-	Atk("E")
-	Atk("T")
-	Atk("F")
 	 end
 	 end)
 	
