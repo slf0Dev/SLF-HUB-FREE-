@@ -1,0 +1,120 @@
+--[[
+╔══╗╔══╦╗─╔╦════╗
+║╔╗╚╣╔╗║╚═╝╠═╗╔═╝
+║║╚╗║║║║╔╗ ║ ║║
+║║─║║║║║║╚╗║ ║║
+║╚═╝║╚╝║║ ║║ ║║
+╚═══╩══╩╝ ╚╝ ╚╝
+
+╔══╦╗╔══╦══╦══╗
+║╔═╣║║╔═╩╗╔╣╔╗╚╗
+║╚═╣╚╝║──║║║║╚╗║
+╚═╗║╔╗║──║║║║─║║
+╔═╝║║║╚═╦╝╚╣╚═╝║
+╚══╩╝╚══╩══╩═══╝
+]]
+function Atk(Skill)
+	game:GetService("ReplicatedStorage").RemoteEvent.Skill.DF:FireServer(Skill, "Down")
+  game:GetService("ReplicatedStorage").RemoteEvent.Skill.DF:FireServer(Skill, "Up")
+	end
+	
+	
+	Targets = {
+		"Thug",
+		"EvilThug",
+    "Runny",
+		"Slime",
+		"Sneaky",
+    "EliteNoob",
+		"Unknown Boss [Fake Yoru]",
+		"Cutie [Boss Raid]",
+		"King Noob",
+		"Sword Master",
+		"Sans",
+	}
+	RunService = game:GetService('RunService')
+	
+	RunService.Heartbeat:Connect(function()
+		if _G.Farm then
+			game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+			end
+		end)
+	
+	local Library = loadstring(game:HttpGet("https://github.com/slf0Dev/SB2-gui/raw/main/SLF%20ui%20library%202"))()
+	local loadedNofi = Library:Nofitication("Slf Hub","Hello . This hub made by SALFIN#0986 .",3)
+	local dick = Library:CreateMain("SLF Hub","Glue Piece","RightControl")
+	
+	local tab1 = dick:AddTab("AutoFarm")
+	
+	local tab2 = dick:AddTab("Misc")
+	
+	local Farm = tab1:AddCheckBox("AutoFarm",function(state)
+		_G.Farm = state
+		if _G.Farm then
+			game.Players.LocalPlayer.Character.Humanoid.RootPart.Orientation = game.Players.LocalPlayer.Character.Humanoid.RootPart.Orientation + Vector3.new(90,0,0) 
+			else
+				game.Players.LocalPlayer.Character.Humanoid.RootPart.Orientation = game.Players.LocalPlayer.Character.Humanoid.RootPart.Orientation - Vector3.new(90,0,0) 
+				end
+		while _G.Farm do 
+			for i,v in next,Workspace:GetChildren() do
+				if v.Name == _G.Target and v.Humanoid.Health > 0 then
+	           game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  v.Humanoid.RootPart.CFrame * CFrame.new(0,_G.Dist,0)
+	      end
+	   end
+	wait()
+		Atk("R")
+	Atk("E")
+	Atk("T")
+	Atk("F")
+	 end
+	 end)
+	
+	local distt = tab1:AddSlider("Distance from Target",0,35,10,"",function(Value)
+		_G.Dist = Value
+	end)
+	
+	
+	local mobsdrp = tab1:AddDropdown("Choose Mob")
+	for i,v in next,Targets do
+	local Tchoice = mobsdrp:AddChoice(v,function(text)
+		_G.Target = text
+	end)
+	end
+	
+	local randFrut = tab2:AddButton("Buy Random Fruit",function()
+	game:GetService("ReplicatedStorage").RemoteEvent.Reset.Reset:FireServer("Random DF", "Money")
+	end)
+	
+	local wk = tab2:AddSlider("WalkSpeed",16,100,16,"",function(Value)
+		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+	end)
+	
+	game.Players.LocalPlayer.Character.Humanoid:GetPropertyChangedSignal("WalkSpeed"):Connect(function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = wk.SliderValuer.Text
+    end)
+	
+	local FruitsSteal = tab2:AddCheckBox("Auto Take Fruits",function(state)
+		_G.Take = state
+		while _G.Take do wait(0.3)
+		for i,v in next,game:GetService("Workspace").DF:GetChildren() do
+		v.Handle.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+		end
+		for i,v in next,game:GetService("Workspace"):GetChildren() do
+			if v:FindFirstChild("DF_Tool_Client") then
+				 v.Handle.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+				end
+		end
+		end
+	end)
+	
+	local walk = tab2:AddCheckBox("Water Walk",function(state)
+ for _,g in next,game.Workspace.Water:GetChildren() do
+     if g.Name == "Water" then
+		if state then
+		g.CanCollide = true
+		else
+		  g.CanCollide = false  
+		end
+     end
+	end
+end)
