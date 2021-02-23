@@ -74,12 +74,12 @@ local SkillsList = {
 			for i,v in next,Workspace:GetChildren() do
 				if v.Name == _G.Target and v.Humanoid.Health > 0 and v ~= nil then
 	           game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  v.Humanoid.RootPart.CFrame * CFrame.new(0,_G.Dist,0)
-	      		   for _,Skill in next,SkillsList do
+	      end
+	   end
+	   	      		   for _,Skill in next,SkillsList do
 		   game:GetService("ReplicatedStorage").RemoteEvent.Skill.DF:FireServer(Skill, "Down")
 		   wait(1)
 		   end
-	      end
-	   end
 	 end
 	 end)
 	
