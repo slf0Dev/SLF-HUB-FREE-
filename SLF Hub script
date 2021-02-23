@@ -25,12 +25,11 @@ end
  AntiAfk()
 
 local SkillsList = {
-"E",
-"R",
-"T",
-"F"
+["E"] = false,
+["R"] = false,
+["T"] = false,
+["F"] = false
 }
-
 
 	
 	
@@ -74,12 +73,16 @@ local SkillsList = {
 			for i,v in next,Workspace:GetChildren() do
 				if v.Name == _G.Target and v.Humanoid.Health > 0 and v ~= nil then
 	           game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  v.Humanoid.RootPart.CFrame * CFrame.new(0,_G.Dist,0)
-	      end
-	   end
-	   	      		   for _,Skill in next,SkillsList do
-		   game:GetService("ReplicatedStorage").RemoteEvent.Skill.DF:FireServer(Skill, "Down")
-		   wait(1)
 		   end
+			end
+			      	      		   for i,Enabled in next,SkillsList do
+      	      		       if Enabled == true then
+		   game:GetService("ReplicatedStorage").RemoteEvent.Skill.DF:FireServer(i, "Down")
+		   wait(0.1) do
+		   game:GetService("ReplicatedStorage").RemoteEvent.Skill.DF:FireServer(i, "Up")
+		   end
+		   end
+      	 end
 	 end
 	 end)
 	
@@ -93,6 +96,12 @@ local SkillsList = {
 	local Tchoice = mobsdrp:AddChoice(v,function(text)
 		_G.Target = text
 	end)
+	end
+	
+	for i,v in next,SkillsList do
+	   local SklEna = tab1:AddCheckBox("Use ".. i .. " Skill",function(state)
+	       SkillsList[i] = state
+	       end)
 	end
 	
 	local randFrut = tab2:AddButton("Buy Random Fruit",function()
