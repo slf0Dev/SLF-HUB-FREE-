@@ -13,6 +13,17 @@
 ╔═╝║║║╚═╦╝╚╣╚═╝║
 ╚══╩╝╚══╩══╩═══╝
 ]]
+
+function AntiAfk()
+    local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   wait(1)
+   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+end
+ AntiAfk()
+
 local SkillsList = {
 "E",
 "R",
@@ -59,12 +70,13 @@ local SkillsList = {
 			else
 				game.Players.LocalPlayer.Character.Humanoid.RootPart.Orientation = game.Players.LocalPlayer.Character.Humanoid.RootPart.Orientation - Vector3.new(90,0,0) 
 				end
-		while _G.Farm do 
+		while _G.Farm do wait()
 			for i,v in next,Workspace:GetChildren() do
 				if v.Name == _G.Target and v.Humanoid.Health > 0 and v ~= nil then
 	           game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  v.Humanoid.RootPart.CFrame * CFrame.new(0,_G.Dist,0)
-		   for _,Skill in next,SkillsList do
+	      		   for _,Skill in next,SkillsList do
 		   game:GetService("ReplicatedStorage").RemoteEvent.Skill.DF:FireServer(Skill, "Down")
+		   wait(1)
 		   end
 	      end
 	   end
