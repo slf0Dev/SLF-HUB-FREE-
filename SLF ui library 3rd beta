@@ -109,6 +109,16 @@ local function JumpTo()
 end
 
 
+	d.Name = "tabBtn"
+	d.Parent = tab1
+	d.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	d.BackgroundTransparency = 1
+	d.BorderSizePixel = 0
+	d.Size = UDim2.new(0, 188, 0, 10)
+	d.Font = Enum.Font.Gotham
+	d.TextColor3 = Color3.fromRGB(0,0,0)
+	d.Text = ""
+	d.TextSize = 18
 
 	tabBtn.Name = "tabBtn"
 	tabBtn.Parent = TabBtns
