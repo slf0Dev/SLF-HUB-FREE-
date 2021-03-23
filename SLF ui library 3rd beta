@@ -160,10 +160,15 @@ Sample.ImageTransparency = 0.200
 	tab1.Size = UDim2.new(0, 616, 0, 490)
 	function InsideTab:AddLabel(text)
 	    local label = Instance.new("TextLabel")
-		label.Name = text
+	    	local labeCorn = Instance.new("UICorner")
+	
+	labeCorn.CornerRadius = UDim.new(0, 5)
+        labeCorn.Parent = label
+    
+	label.Name = text
 	label.Parent = tab1
 	label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	label.BackgroundTransparency = 1.000
+	label.BackgroundTransparency = 0.97
 	label.BorderSizePixel = 0
 	label.Size = UDim2.new(1, -15, 0, 50)
 	label.Font = Enum.Font.Gotham
@@ -237,9 +242,7 @@ Sample.ImageTransparency = 0.100
         
 
         
-        local function Fire()
-        callback(IsToggled.Value)
-        end
+
         
         checkbox.Name = "checkbox"
         checkbox.Parent = tab1
@@ -287,14 +290,15 @@ Sample.ImageTransparency = 0.100
         moveCorn.BackgroundColor3 = Color3.fromRGB(10,100,255)
         moveCorn.BackgroundTransparency = 0
         moveCorn:TweenPosition(UDim2.new(0,45,0.5,0),"Out","Quad",0.25,true,nil)
+        callback(true)
         else
             IsToggled.Value = false
             moveCorn.BackgroundTransparency = 0.8
             moveCorn.BackgroundColor3 = Color3.fromRGB(255,255,255)
             moveCorn:TweenPosition(UDim2.new(0,5,0.5,0),"Out","Quad",0.25,true,nil)
+        callback(false)
         end
         end)
-        checkbox.MouseButton1Click:Connect(Fire)
         return checkbox;
         end
 	return InsideTab;
