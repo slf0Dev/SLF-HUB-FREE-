@@ -322,8 +322,8 @@ Sample.ImageTransparency = 0.100
     
 	box.Name = text
 	box.Parent = tab1
-	box.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
-	box.BackgroundTransparency = 0.97
+	box.BackgroundColor3 = Color3.fromRGB(10,100,255)
+	box.BackgroundTransparency = 0.9
 	box.BorderSizePixel = 0
 	box.Size = UDim2.new(1, -15, 0, 50)
 	box.Font = Enum.Font.Gotham
