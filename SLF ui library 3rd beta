@@ -101,6 +101,7 @@ local InsideTab = {}
 	local Tabc = TabCount
 	local tab1 = Instance.new("Frame")
 	local tabBtn = Instance.new("TextButton")
+	local d = Instance.new("Frame")
     local UiListLa = Instance.new("UIListLayout",tab1)
     UiListLa.SortOrder = Enum.SortOrder.LayoutOrder
     UiListLa.HorizontalAlignment = Enum.HorizontalAlignment.Center
@@ -111,7 +112,7 @@ local function JumpTo()
 end
 
 
-	d.Name = "tabBtn"
+	d.Name = "d"
 	d.Parent = tab1
 	d.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	d.BackgroundTransparency = 1
