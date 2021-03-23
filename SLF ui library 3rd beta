@@ -301,6 +301,29 @@ Sample.ImageTransparency = 0.100
         end)
         return checkbox;
         end
+	function InsideTab:AddTextBox(text,callback)
+	    local box = Instance.new("TextBox")
+	    	local boxCorn = Instance.new("UICorner")
+	
+	boxCorn.CornerRadius = UDim.new(0, 5)
+        boxCorn.Parent = box
+    
+	box.Name = text
+	box.Parent = tab1
+	box.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+	box.BackgroundTransparency = 0.97
+	box.BorderSizePixel = 0
+	box.Size = UDim2.new(1, -15, 0, 50)
+	box.Font = Enum.Font.Gotham
+	box.TextColor3 = Color3.fromRGB(0,0,0)
+	box.Text = text
+	box.TextSize = 18
+	box.FocusLost:Connect(function()
+	callback(box.Text)
+	end)
+	
+	return box;
+	end
 	return InsideTab;
 end
 return Tabs;
