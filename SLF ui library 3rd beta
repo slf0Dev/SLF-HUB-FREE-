@@ -32,6 +32,8 @@ Main.BackgroundTransparency = 0.3
 Main.BorderSizePixel = 0
 Main.Position = UDim2.new(0.223622054, 0, 0.148967549, 0)
 Main.Size = UDim2.new(0, 804, 0, 490)
+Main.Active = true
+Main.Draggable = true
 
 TabBtns.Name = "TabBtns"
 TabBtns.Parent = Main
