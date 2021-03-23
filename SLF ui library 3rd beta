@@ -1,6 +1,12 @@
 local Library = {}
+        local function color(Object,r,g,b,Delay)
+            local ToTween = Object
+            local tweenInfo = TweenInfo.new(Delay,Enum.EasingStyle.Quad,Enum.EasingDirection.Out,0,false,0)
+            local Tweener = TweenService:Create(ToTween,tweenInfo,{BackgroundColor3 = Color3.fromRGB(r,g,b)})
+            Tweener:Play()
+        end
 local ms = game.Players.LocalPlayer:GetMouse()
-local TabCount = 0
+local TabCount = -1
 function Library:Main(hb,gm)
 local LibraryD = Instance.new("ScreenGui")
 local Main = Instance.new("Frame")
@@ -21,15 +27,15 @@ LibraryD.ResetOnSpawn = false
 
 Main.Name = "Main"
 Main.Parent = LibraryD
-Main.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-Main.BackgroundTransparency = 0.1
+Main.BackgroundColor3 = Color3.fromRGB(255,255,255)
+Main.BackgroundTransparency = 0.3
 Main.BorderSizePixel = 0
 Main.Position = UDim2.new(0.223622054, 0, 0.148967549, 0)
 Main.Size = UDim2.new(0, 804, 0, 490)
 
 TabBtns.Name = "TabBtns"
 TabBtns.Parent = Main
-TabBtns.BackgroundColor3 = Color3.fromRGB(33,33,33)
+TabBtns.BackgroundColor3 = Color3.fromRGB(200,200,200)
 TabBtns.BorderSizePixel = 0
 TabBtns.Position = UDim2.new(0, 0, 0.138775513, 0)
 TabBtns.Size = UDim2.new(0, 188, 0, 422)
@@ -54,10 +60,13 @@ UIPageLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 UIPageLayout.SortOrder = Enum.SortOrder.LayoutOrder
 UIPageLayout.VerticalAlignment = Enum.VerticalAlignment.Center
 UIPageLayout.EasingStyle = Enum.EasingStyle.Circular
+UIPageLayout.GamepadInputEnabled = false
+UIPageLayout.ScrollWheelInputEnabled = false
+UIPageLayout.TouchInputEnabled = false
 
 TabBtns_2.Name = "TabBtns"
 TabBtns_2.Parent = Main
-TabBtns_2.BackgroundColor3 = Color3.fromRGB(33,33,33)
+TabBtns_2.BackgroundColor3 = Color3.fromRGB(200,200,200)
 TabBtns_2.BorderSizePixel = 0
 TabBtns_2.Size = UDim2.new(0, 188, 0, 68)
 
@@ -69,7 +78,7 @@ hubname.BorderSizePixel = 0
 hubname.Size = UDim2.new(0, 188, 0, 30)
 hubname.Font = Enum.Font.Gotham
 hubname.Text = hb
-hubname.TextColor3 = Color3.fromRGB(255, 255, 255)
+hubname.TextColor3 = Color3.fromRGB(0,0,0)
 hubname.TextSize = 23.000
 
 gamename.Name = "gamename"
@@ -81,7 +90,7 @@ gamename.Position = UDim2.new(0, 0, 0.279411763, 0)
 gamename.Size = UDim2.new(0, 188, 0, 35)
 gamename.Font = Enum.Font.Gotham
 gamename.Text = gm
-gamename.TextColor3 = Color3.fromRGB(255, 255, 255)
+gamename.TextColor3 = Color3.fromRGB(0,0,0)
 gamename.TextSize = 16.000
 local Tabs = {}
 function Tabs:AddTab(name)
@@ -90,14 +99,15 @@ local InsideTab = {}
 	local Tabc = TabCount
 	local tab1 = Instance.new("Frame")
 	local tabBtn = Instance.new("TextButton")
-    local label = Instance.new("TextButton")
     local UiListLa = Instance.new("UIListLayout",tab1)
     UiListLa.SortOrder = Enum.SortOrder.LayoutOrder
     UiListLa.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UiListLa.Padding = UDim.new(0, 5)
 local function JumpTo()
 	UIPageLayout:JumpToIndex(Tabc)
 	print('Jumped to : '.. Tabc)
 end
+
 
 
 	tabBtn.Name = "tabBtn"
@@ -107,11 +117,40 @@ end
 	tabBtn.BorderSizePixel = 0
 	tabBtn.Size = UDim2.new(0, 188, 0, 50)
 	tabBtn.Font = Enum.Font.Gotham
-	tabBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+	tabBtn.TextColor3 = Color3.fromRGB(0,0,0)
 	tabBtn.Text = name
 	tabBtn.TextSize = 18
 	tabBtn.ClipsDescendants = true
 	tabBtn.MouseButton1Click:Connect(JumpTo)
+
+tabBtn.MouseButton1Click:Connect(function()
+	local Sample = Instance.new("ImageLabel")
+	
+	Sample.Name = "Sample"
+Sample.Parent = tabBtn
+Sample.BackgroundColor3 = Color3.fromRGB(10,100,255)
+Sample.BackgroundTransparency = 1
+Sample.ZIndex = 12
+Sample.Image = "http://www.roblox.com/asset/?id=4560909609"
+Sample.ImageColor3 = Color3.fromRGB(10,100,255)
+Sample.ImageTransparency = 0.200
+        local x, y = (ms.X - Sample.AbsolutePosition.X), (ms.Y - Sample.AbsolutePosition.Y)
+		Sample.Position = UDim2.new(0, x, 0, y)
+		local len, size = 0.6, nil
+		if tabBtn.AbsoluteSize.X >= tabBtn.AbsoluteSize.Y then
+			size = (tabBtn.AbsoluteSize.X * 1.3)
+		else
+			size = (tabBtn.AbsoluteSize.Y * 1.3)
+		end
+		Sample:TweenSizeAndPosition(UDim2.new(0, size, 0, size), UDim2.new(0.5, (-size / 2), 0.5, (-size / 2)), 'Out', 'Quad', 1, true, nil)
+		for _ = 1,23 do
+		Sample.ImageTransparency = Sample.ImageTransparency + 0.05
+		wait()
+		end
+		wait(0.8) do
+			Sample:Destroy()
+		end
+	end)
 
 	tab1.Name = "tab1"
 	tab1.Parent = TabsShow
@@ -120,6 +159,7 @@ end
 	tab1.BorderSizePixel = 0
 	tab1.Size = UDim2.new(0, 616, 0, 490)
 	function InsideTab:AddLabel(text)
+	    local label = Instance.new("TextLabel")
 		label.Name = text
 	label.Parent = tab1
 	label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -127,25 +167,33 @@ end
 	label.BorderSizePixel = 0
 	label.Size = UDim2.new(1, -15, 0, 50)
 	label.Font = Enum.Font.Gotham
-	label.TextColor3 = Color3.fromRGB(255, 255, 255)
+	label.TextColor3 = Color3.fromRGB(0,0,0)
 	label.Text = text
 	label.TextSize = 18
+	return label;
 	end
-	function InsideTab:AddButton(Text)
+	function InsideTab:AddButton(Text,callback)
 	local Btn = Instance.new("TextButton")
+	local btnCorn = Instance.new("UICorner")
+	
+	btnCorn.CornerRadius = UDim.new(0, 5)
+    btnCorn.Parent = Btn
 	
 	Btn.Name = "tabBtn"
 	Btn.Parent = tab1
 	Btn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	Btn.BackgroundTransparency = 1
+	Btn.BackgroundTransparency = 0.97
 	Btn.BorderSizePixel = 0
 	Btn.Size = UDim2.new(1, -15, 0, 50)
 	Btn.Font = Enum.Font.Gotham
-	Btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Btn.TextColor3 = Color3.fromRGB(0,0,0)
 	Btn.Text = Text
 	Btn.TextSize = 18
 	Btn.ClipsDescendants = true
-	
+	Btn.AutoButtonColor = false
+	Btn.MouseButton1Click:Connect(function()
+	callback()
+	end)
 	Btn.MouseButton1Click:Connect(function()
 	local Sample = Instance.new("ImageLabel")
 	
@@ -155,8 +203,8 @@ Sample.BackgroundColor3 = Color3.fromRGB(150,0,255)
 Sample.BackgroundTransparency = 1
 Sample.ZIndex = 12
 Sample.Image = "http://www.roblox.com/asset/?id=4560909609"
-Sample.ImageColor3 = Color3.fromRGB(150,0,255)
-Sample.ImageTransparency = 0.400
+Sample.ImageColor3 = Color3.fromRGB(10,100,255)
+Sample.ImageTransparency = 0.100
         local x, y = (ms.X - Sample.AbsolutePosition.X), (ms.Y - Sample.AbsolutePosition.Y)
 		Sample.Position = UDim2.new(0, x, 0, y)
 		local len, size = 0.6, nil
@@ -165,8 +213,8 @@ Sample.ImageTransparency = 0.400
 		else
 			size = (Btn.AbsoluteSize.Y * 1.3)
 		end
-		Sample:TweenSizeAndPosition(UDim2.new(0, size, 0, size), UDim2.new(0.5, (-size / 2), 0.5, (-size / 2)), 'Out', 'Quad', 0.5, true, nil)
-		for _ = 1,14 do
+		Sample:TweenSizeAndPosition(UDim2.new(0, size, 0, size), UDim2.new(0.5, (-size / 2), 0.5, (-size / 2)), 'Out', 'Quad', 1, true, nil)
+		for _ = 1,26 do
 		Sample.ImageTransparency = Sample.ImageTransparency + 0.05
 		wait()
 		end
@@ -174,8 +222,81 @@ Sample.ImageTransparency = 0.400
 			Sample:Destroy()
 		end
 	end)
-	
+	return Btn;
     end
+    function InsideTab:AddCheckbox(text,callback)
+        
+        local checkbox = Instance.new("TextButton")
+        local CheckCorn = Instance.new("UICorner")
+        local In = Instance.new("Frame")
+        local ChecktwoCorn = Instance.new("UICorner")
+        local moveCorn = Instance.new("Frame")
+        local incorn = Instance.new("UICorner")
+        local IsToggled = Instance.new("BoolValue")
+        IsToggled.Value = false
+        
+
+        
+        local function Fire()
+        callback(IsToggled.Value)
+        end
+        
+        checkbox.Name = "checkbox"
+        checkbox.Parent = tab1
+        checkbox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        checkbox.BackgroundTransparency = 0.970
+        checkbox.Size = UDim2.new(1, -15, 0, 50)
+        checkbox.Font = Enum.Font.Gotham
+        checkbox.TextColor3 = Color3.fromRGB(0,0,0)
+        checkbox.TextSize = 18.000
+        checkbox.TextXAlignment = Enum.TextXAlignment.Left
+        checkbox.AutoButtonColor = false
+        checkbox.Text = "   " .. text
+        
+        CheckCorn.CornerRadius = UDim.new(0, 5)
+        CheckCorn.Name = "CheckCorn"
+        CheckCorn.Parent = checkbox
+        
+        In.Name = "In"
+        In.Parent = checkbox
+        In.AnchorPoint = Vector2.new(0.5, 0.5)
+        In.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        In.BackgroundTransparency = 0.800
+        In.Position = UDim2.new(0.907000005, 0, 0.5, 0)
+        In.Size = UDim2.new(0, 100, 0, 31)
+        
+        ChecktwoCorn.CornerRadius = UDim.new(0, 5)
+        ChecktwoCorn.Name = "ChecktwoCorn"
+        ChecktwoCorn.Parent = In
+        
+        moveCorn.Name = "moveCorn"
+        moveCorn.Parent = In
+        moveCorn.AnchorPoint = Vector2.new(0, 0.5)
+        moveCorn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        moveCorn.BackgroundTransparency = 0.800
+        moveCorn.BorderColor3 = Color3.fromRGB(27, 42, 53)
+        moveCorn.Position = UDim2.new(0, 5, 0.5, 0)
+        moveCorn.Size = UDim2.new(0.5, 0, 0.699999988, 0)
+        
+        incorn.CornerRadius = UDim.new(0, 5)
+        incorn.Name = "incorn"
+        incorn.Parent = moveCorn
+        checkbox.MouseButton1Click:Connect(function()
+                if not IsToggled.Value then
+        IsToggled.Value = true
+        moveCorn.BackgroundColor3 = Color3.fromRGB(10,100,255)
+        moveCorn.BackgroundTransparency = 0
+        moveCorn:TweenPosition(UDim2.new(0,45,0.5,0),"Out","Quad",0.25,true,nil)
+        else
+            IsToggled.Value = false
+            moveCorn.BackgroundTransparency = 0.8
+            moveCorn.BackgroundColor3 = Color3.fromRGB(255,255,255)
+            moveCorn:TweenPosition(UDim2.new(0,5,0.5,0),"Out","Quad",0.25,true,nil)
+        end
+        end)
+        checkbox.MouseButton1Click:Connect(Fire)
+        return checkbox;
+        end
 	return InsideTab;
 end
 return Tabs;
